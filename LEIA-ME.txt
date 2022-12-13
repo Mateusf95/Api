@@ -1,0 +1,78 @@
+Versão do nodeJs: v14.8.0
+versão do npm: 6.14.7
+
+Ao descompactar a pasta rode o comando "npm install" no diretório da pasta para instalar as dependências da api;
+Para dar start na aplicação rode o comando "npm start" deverá aparecer as seguintes informações no console "Api funcionando
+Rodando em https"
+
+URL: http://localhost:3000/api
+
+Obs: o sinal de + que aparece na frente da URL é apenas para concatenação, não faz parte da URL.
+
+CRUD Usuário
+
+Buscar todos usuários: URL+/usuarios/
+Buscar um usuário: URL+/usuarios/user/:id
+Inserir um novo usuário: URL+/usuarios/create
+ex.: 
+{
+    "name": "nome usuário",
+    "email": "email usuário",
+    "senha": "senhaUsuario"
+}
+Atualizar um usuário: URL+/update/:id
+ex.: 
+{
+    "nome": "novo nome usuário",
+    "email": "novo email usuário",
+    "senha": "nova senhaUsuario"
+}
+Deletar um usuário: URL+/delete/:id
+Login de um usuario: URL+/login
+
+CRUD Pedidos
+
+Buscar todos os pedidos: URL+/pedidos
+Buscar um pedido: URL+/pedido/:id
+Inserir um novo pedido: URL+/create-pedido
+{
+    "name": "primeiro nome de quem está pedindo",
+    "lastName": "sobrenome de quem está pedindo",
+    "address": "enderenco da pessoa que está pedindo",
+    "contact": "telefone (99)999999999",
+    "request": "seu pedido"
+}
+Atualizar um pedido: URL+/pedido/update/:id
+ex.:
+{
+    "name": "novo primeiro nome de quem está pedindo",
+    "lastName": "novo sobrenome de quem está pedindo",
+    "address": "novo enderenco da pessoa que está pedindo",
+    "contact": "novo telefone(99)999999999",
+    "request": "novo texto do pedido"
+}
+Deletar um pedido: URL+/delete/pedido/:id
+
+CRUD Doações
+
+Buscar todoas as doações: URL+/doacoes
+Buscar uma doação: URL+/doacao/:id
+Inserir uma nova doação: URL+/create-doacao 
+{
+    "name": "primeiro nome de quem está doando",
+    "lastName": "sobrenome de quem está doando",
+    "address": "enderenco da pessoa que está doando",
+    "contac": "telefone (99)999999999",
+    "request": "sua doação"
+}
+Atualizar uma doação: URL+/doacao/update/:id
+ex.:
+{
+    "name": "novo primeiro nome de quem está doando",
+    "lastName": "novo sobrenome de quem está doando",
+    "address": "novo enderenco da pessoa que está doando",
+    "contact": "novo telefone(99)999999999",
+    "request": "novo texto d a doação"
+}
+Deletar uma doação: URL+/doacao/delete/:id
+
