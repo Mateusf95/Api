@@ -2,8 +2,8 @@ Versão do nodeJs: v14.8.0
 versão do npm: 6.14.7
 
 Ao descompactar a pasta rode o comando "npm install" no diretório da pasta para instalar as dependências da api;
-Para dar start na aplicação rode o comando "npm start" deverá aparecer as seguintes informações no console "Api funcionando
-Rodando em https"
+Para dar start na aplicação rode o comando "npm start" deverá aparecer as seguintes informações no console "Server started on port 3000" e 
+"dataBase connected successfull!"
 
 URL: http://localhost:3000/api
 
