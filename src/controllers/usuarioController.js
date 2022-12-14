@@ -1,6 +1,6 @@
 const Usuario = require("../models/usuarioModel.js");
 
-require('dotenv').config();
+require('dotenv').config({ path: 'variaveis.env' });
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -64,9 +64,11 @@ module.exports = {
             if (!user) {
                 return res.status(400).json("User not found!");
             }
+            const salt = await bcrypt.genSalt(12);
+            const password = await bcrypt.hash(senha, salt);
             user.name = name;
             user.email = email;
-            user.senha = senha;
+            user.senha = password;
             await user.save();
             res.status(201).json("User uptated!");
         } catch (error) {
@@ -95,12 +97,11 @@ module.exports = {
         if (!senha) {
             return res.status(400).json("Password is Mandatory");
         }
-        const user = await Usuario.findOne({ email: email });
+        const user = await Usuario.findOne({ where: {email} });
         if (!user) {
             return res.status(400).json("User not found");
         }
         const checksenha = await bcrypt.compare(senha, user.senha);
-
         if (!checksenha) {
             return res.status(400).json("Password invalid");
         }
@@ -108,44 +109,43 @@ module.exports = {
         try {
             const secret = process.env.SECRET
             const token = jwt.sign({
-                id: user._id,
+                userId: user.id,
             },
                 secret,
             )
-            res.status(200).json("Authentication performed successfully " + token);
+            res.status(200).json({"msg": "Authentication performed successfully",
+            "token": `${token}`});
         } catch (error) {
             console.log(error);
             res.status(400).send(error);
         }
     },
     async logado(req, res) {
-        const id = req.params.id
-
+        const id = req.params.id;
         const user = await Usuario.findOne({ where:  {id} });
         if (!user) {
             return res.status(400).json("User not found");
         }
-        // checkTpken();
         res.status(200).json({
             "id": `${user.id}`,
             "name": `${user.name}`,
             "email": `${user.email}`
         })
     },
-};
-function checkTpken(req, res, next){
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+    async checkTpken(req, res, next){
+        const authHeader = req.headers['authorization']
+        const token = authHeader && authHeader.split(' ')[1]
 
-    if (!token) {
-        return res.status(401).json("Access denied");
-    }
-    try {
-        const secret = process.env.SECRET
-        jwt.verify(token, secret)
-        next()
-    } catch (error) {
-        console.log(error);
+        if (!token) {
+            return res.status(401).json("Access denied");
+        }
+        try {
+            const secret = process.env.SECRET
+            jwt.verify(token, secret)
+            next();
+        } catch (error) {
+            console.log(error);
             res.status(400).send(error);
+        }
     }
-}
+};

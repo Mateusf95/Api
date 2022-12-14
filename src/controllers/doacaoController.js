@@ -42,7 +42,7 @@ module.exports = {
         try {
             const { name, lastName, address, contact, request } = req.body;
             const id = req.params.id;
-            const doacao = await Doacao.findOne({ where:  {id}  });
+            const doacao = await Doacao.findOne({ where: { id }  });
             if (!doacao) {
                 return res.status(400).json("Donation not found!");
             }

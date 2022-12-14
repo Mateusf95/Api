@@ -42,7 +42,7 @@ module.exports = {
         try {
             const { name, lastName, address, contact, request } = req.body;
             const id = req.params.id;
-            const pedido = await Pedido.findOne({ where:  {id}  });
+            const pedido = await Pedido.findOne({ where: { id } });
             if (!pedido) {
                 return res.status(400).json("Request not found!");
             }
