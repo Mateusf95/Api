@@ -5,6 +5,7 @@ const app = express();
 const cors = require("cors");
 
 sequelize.sync().then(() => console.log("dataBase connected successfull!"));
+app.use(cors());
 app.use("/api/usuarios", routes);
 app.use("/api", routes);
 app.use("/api", routes);
