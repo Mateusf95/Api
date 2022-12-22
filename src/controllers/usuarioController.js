@@ -92,34 +92,36 @@ module.exports = {
     async login(req, res) {
         const { email, senha } = req.body;
         if (!email) {
-            return res.status(400).json("E-mail is Mandatory");
+          return res.status(400).json("E-mail is Mandatory");
         }
         if (!senha) {
-            return res.status(400).json("Password is Mandatory");
+          return res.status(400).json("Password is Mandatory");
         }
-        const user = await Usuario.findOne({ where: {email} });
+        const user = await Usuario.findOne({ where: { email } });
         if (!user) {
-            return res.status(400).json("User not found");
+          return res.status(400).json("User not found");
         }
         const checksenha = await bcrypt.compare(senha, user.senha);
         if (!checksenha) {
-            return res.status(400).json("Password invalid");
+          return res.status(400).json("Password invalid");
         }
-
+    
         try {
-            const secret = process.env.SECRET
-            const token = jwt.sign({
-                userId: user.id,
+          const secret = process.env.SECRET;
+          const token = jwt.sign(
+            {
+              userId: user.id,
             },
-                secret,
-            )
-            res.status(200).json({"msg": "Authentication performed successfully",
-            "token": `${token}`});
+            secret
+          );
+          res.status(200).json({ id: user.id, name: user.name, email: user.email });
+          // res.status(200).json({"msg": "Authentication performed successfully",
+          // "token": ${token}});
         } catch (error) {
-            console.log(error);
-            res.status(400).send(error);
+          console.log(error);
+          res.status(400).send(error);
         }
-    },
+      },
     async logado(req, res) {
         const id = req.params.id;
         const user = await Usuario.findOne({ where:  {id} });
